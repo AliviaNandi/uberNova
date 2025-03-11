@@ -18,3 +18,15 @@
         "__v": 0
     }
 }
+
+
+
+
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2QwNmFkNjFiNjBlNDU2YjA3NzdiYjgiLCJpYXQiOjE3NDE3MTQzNTksImV4cCI6MTc0MTgwMDc1OX0.TerVOd4HW69csphsQZNb5E7BmPphTiyVdLlnMw_9rJE",
+    "captain": {
+        "_id": "67d06ad61b60e456b0777bb8",
+        "password": "$2b$10$olnqKmEexNNe33q3p4OwKepv3zbu9X6eDRNrqtoyJCbpwd32uUUHS"
+    }
+}
