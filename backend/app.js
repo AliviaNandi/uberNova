@@ -4,9 +4,10 @@ const express=require('express');
 const app=express();
 const cookieParser=require('cookie-parser');
 const cors= require('cors');
-
 const connectDB=require('./db/db');
 const userRoutes=require('./routes/user.route');
+const captainRoutes = require('./routes/captain.routes');
+
 connectDB();
 
 app.use(cors());
@@ -19,5 +20,7 @@ app.get('/',(req,res)=>{
 });
 
 app.use('/users',userRoutes);
+app.use('/captains',captainRoutes);
+
 
 module.exports=app;

@@ -1,0 +1,20 @@
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2QwNmFkNjFiNjBlNDU2YjA3NzdiYjgiLCJpYXQiOjE3NDE3MTIwODYsImV4cCI6MTc0MTc5ODQ4Nn0.Rr3c7MkZO6vblbawuHL8ALYZmlkBNceNKXHw83AIgF0",
+    "captain": {
+        "fullname": {
+            "firstname": "test_captain_firstname",
+            "lastname": "test_captain_lastname"
+        },
+        "email": "test_email@gmail.com",
+        "password": "$2b$10$olnqKmEexNNe33q3p4OwKepv3zbu9X6eDRNrqtoyJCbpwd32uUUHS",
+        "status": "inactive",
+        "vehicle": {
+            "color": "red",
+            "plate": "WB 05 XY 989",
+            "capacity": 3,
+            "vehicleType": "car"
+        },
+        "_id": "67d06ad61b60e456b0777bb8",
+        "__v": 0
+    }
+}
