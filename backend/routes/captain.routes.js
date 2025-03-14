@@ -2,7 +2,7 @@ const captainController = require('../controllers/captain.controller');
 const express = require('express');
 const router = express.Router();
 const { body } = require('express-validator');
-const authMiddleware = require('../middleware/auth.middleware');
+const authMiddleware = require('../middleware/authMiddleware');
 
 router.post('/register', [
     body('email').isEmail().withMessage('Invalid email'),

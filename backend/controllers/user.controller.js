@@ -3,34 +3,77 @@ const userService = require('../services/user.service');
 const { validationResult } = require('express-validator');
 const blacklistedToken= require('../models/blacklistToken.model');
 
-module.exports.registerUser = async (req, res,next) => {
+// module.exports.registerUser = async (req, res,next) => {
+
+//   console.log("Received Body:", req.body);
+
+//   const errors = validationResult(req);
+//   if(!errors.isEmpty()){
+//     return res.status(400).json ({
+//         errors: errors.array()
+//     });
+//   }
+
+//   const { fullname, email, password } = req.body;
+
+//   const isUserAlreadyExist = await userModel.findOne({ email });
+
+//   if(isUserAlreadyExist){
+//     return res.status(400).json({ message: 'User already exists' });
+//   }
+
+//   const hashedPassword= await userModel.hashPassword(password);
+
+//   const user = await userService.createUser({
+//     firstname: fullname.firstname,
+//     lastname: fullname.lastname,
+//     email,
+//     password: hashedPassword
+//   });
+
+//   const token = user.generateAuthToken();
+
+//   res.status(201).json({token,user});
+// }
+
+module.exports.registerUser = async (req, res, next) => {
+  console.log("Received Body:", req.body);
+
   const errors = validationResult(req);
-  if(!errors.isEmpty()){
-    return res.status(400).json ({
-        errors: errors.array()
-    });
+  if (!errors.isEmpty()) {
+    console.log("Validation Errors:", errors.array());
+    return res.status(400).json({ errors: errors.array() });
   }
 
   const { fullname, email, password } = req.body;
+  if (!fullname || !email || !password) {
+    return res.status(400).json({ message: "Missing required fields" });
+  }
 
-  const isUserAlreadyExist = await userModel.findOne({ email });
-  if(isUserAlreadyExist){
-    return res.status(400).json({ message: 'User already exists' });
+  console.log("Registering User:", { fullname, email });
 
-  const hashedPassword= await userModel.hashPassword(password);
+  try {
+    const isUserAlreadyExist = await userModel.findOne({ email });
+    if (isUserAlreadyExist) {
+      return res.status(400).json({ message: "User already exists" });
+    }
 
-  const user = await userService.createUser({
-    firstname: fullname.firstname,
-    lastname: fullname.lastname,
-    email,
-    password: hashedPassword
-  });
+    const hashedPassword = await userModel.hashPassword(password);
+    const user = await userService.createUser({
+      firstname: fullname.firstname,
+      lastname: fullname.lastname,
+      email,
+      password: hashedPassword,
+    });
 
-  const token = user.generateAuthToken();
+    const token = user.generateAuthToken();
+    res.status(201).json({ token, user });
+  } catch (err) {
+    console.error("Error in Registration:", err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
 
-  res.status(201).json({token,user});
-}
-}
 
 module.exports.loginUser = async (req, res, next) => {
     const errors = validationResult(req);
@@ -60,12 +103,13 @@ module.exports.loginUser = async (req, res, next) => {
 }
 
 module.exports.getUserProfile = async (req, res, next) => {
-  req.status(200).json(req.user);
-}
+  res.status(200).json(req.user);
+};
+
 
 module.exports.logoutUser = async (req, res, next) => {
   res.clearCookie('token');
-  const token = req.cookies.token || req.headers.authorization.split(' ')[1];
+  const token = req.cookies?.token || req.headers.authorization.split(' ')[1];
 
   await blacklistedToken.create({ token });
 
