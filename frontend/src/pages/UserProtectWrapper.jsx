@@ -1,5 +1,5 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react'
-import { UserDataContext } from '../context/userContext'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
@@ -9,7 +9,7 @@ const UserProtectWrapper = ({
 
     const token = localStorage.getItem('token')
     const navigate = useNavigate()
-    const { user, setUser }= useState(true)
+    const [ user, setUser ]= useState(null)
     const [ isLoading, setIsLoading] = useState(true)
     
     useEffect(() => {
@@ -47,4 +47,4 @@ const UserProtectWrapper = ({
     )
 }
 
-export default UserProtectWrapper
+export default UserProtectWrapper;
