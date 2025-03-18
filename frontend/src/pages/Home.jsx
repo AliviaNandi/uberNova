@@ -7,6 +7,7 @@ import LocationSearchPanel from '../components/LocationSearchPanel'
 import VehiclePanel from '../components/VehiclePanel'
 import ConfirmRide from '../components/ConfirmRide'
 import LookingForDriver from '../components/LookingForDriver'
+import WaitingForDriver from '../components/WaitingForDriver'
 
 const Home = () => {
 
@@ -17,10 +18,12 @@ const Home = () => {
     const vehiclePanelRef = useRef(null)
     const ConfirmRidePanelRef = useRef(null)
     const vehicleFoundRef = useRef(null)
+    const WaitingForDriverRef= useRef(null)
     const panelRef = useRef(null)
     const panelCloseRef = useRef(null)
     const [confirmRidePanel, setConfirmRidePanel] = useState(false)
     const [vehicleFound, setVehicleFound] = useState(false)
+    const [WaitingForDriver, setWaitingForDriver] = useState(false)
 
     const submitHandler = (e) => {
         e.preventDefault()
@@ -83,6 +86,18 @@ const Home = () => {
         }
     }, [vehicleFound])
 
+    useGSAP(function () {
+        if (WaitingForDriver) {
+            gsap.to(WaitingForDriverRef.current, {
+                transform: 'translateY(0)'
+            })
+        } else {
+            gsap.to(WaitingForDriverRef.current, {
+                transform: 'translateY(100%)'
+            })
+        }
+    }, [WaitingForDriver])
+
 
     return (
         <div className='h-screen relative overflow-hidden'>
@@ -139,7 +154,10 @@ const Home = () => {
                 <ConfirmRide setConfirmRidePanel={setConfirmRidePanel} setVehicleFound={setVehicleFound}/>
             </div>
             <div ref={vehicleFoundRef} className='fixed w-full z-10 bottom-0  translate-y-full p-3 py-6 px-3 pt-12 bg-white'>
-               <LookingForDriver/>
+               <LookingForDriver setVehicleFound={setVehicleFound}/>
+            </div>
+            <div ref={WaitingForDriverRef}  className='fixed w-full z-10 bottom-0 p-3 py-6 px-3 pt-12 bg-white'>
+               <WaitingForDriver WaitingForDriver={WaitingForDriver}  />
             </div>
         </div>
 
